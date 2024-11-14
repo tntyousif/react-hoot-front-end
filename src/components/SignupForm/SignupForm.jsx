@@ -1,6 +1,8 @@
+// SignupForm.jsx
+import * as authService from '../../services/authService'
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import * as authService from '../../services/authService';
 
 const SignupForm = (props) => {
   const navigate = useNavigate();
@@ -20,15 +22,16 @@ const SignupForm = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const newUserResponse = await authService.signup(formData);
+      const newUserResponse = await authService.signup(formData)
       props.setUser(newUserResponse.user);
-      navigate('/');
+      navigate('/')
     } catch (err) {
-      updateMessage(err.message);
+      updateMessage(err.message)
     }
-  };
+  }
+
 
   const { username, password, passwordConf } = formData;
 

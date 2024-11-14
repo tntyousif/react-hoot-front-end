@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AuthedUserContext } from '../../App';
 import { useContext } from 'react';
-import styles from './NavBar.module.css';
-import Logo from '../../assets/images/logo.svg';
+import styles from './NavBar.module.css'
+import Logo from '../../assets/images/logo.svg'
 
 const NavBar = ({ handleSignout }) => {
   const user = useContext(AuthedUserContext);
@@ -10,14 +10,17 @@ const NavBar = ({ handleSignout }) => {
     <>
       {user ? (
         <nav className={styles.container}>
-          <Link to='/'><img src={Logo} alt="A cute owl" /></Link>
+          <Link to='/'><img src={Logo} /></Link>
           <ul>
             <li>Welcome, {user.username}</li>
             <li>
               <Link to="/">HOME</Link>
             </li>
             <li>
-              <Link to="/hoots">HOOTS</Link>
+              <Link to='/hoots'>HOOTS</Link>
+            </li>
+            <li>
+              <Link to="/hoots/new">NEW HOOT</Link>
             </li>
             <li>
               <Link to="" onClick={handleSignout}>
@@ -28,7 +31,7 @@ const NavBar = ({ handleSignout }) => {
         </nav>
       ) : (
         <nav className={styles.container}>
-          <Link to='/'><img src={Logo} alt="A cute owl" /></Link>
+          <Link to='/'><img src={Logo} /></Link>
           <ul>
             <li>
               <Link to="/signin">Sign In</Link>
