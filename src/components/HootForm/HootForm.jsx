@@ -1,55 +1,53 @@
-// src/components/HootForm/HootForm.jsx
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import * as hootService from '../../services/hootService'
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import * as hootService from '../../services/hootService';
-
-const HootForm = (props) => {
+const HootForm = props => {
   const [formData, setFormData] = useState({
     title: '',
     text: '',
     category: 'News',
-  });
+  })
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    if (hootId) {
-      props.handleUpdateHoot(hootId, formData);
-    } else {
-      props.handleAddHoot(formData);
-    }
-  };
-
-  const { hootId } = useParams();
+  const { hootId } = useParams()
 
   useEffect(() => {
     const fetchHoot = async () => {
-      const hootData = await hootService.show(hootId);
-      setFormData(hootData);
-    };
+      const hootData = await hootService.show(hootId)
+      setFormData(hootData)
+    }
     if (hootId) {
-      fetchHoot();
-    } else{
+      fetchHoot()
+    } else {
       setFormData({
         title: '',
         text: '',
         category: 'News',
-      });
+      })
     }
+  }, [hootId])
 
-  }, [hootId]);
+  const handleChange = event => {
+    setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    if (hootId) {
+        props.handleUpdateHoot(hootId, formData)
+    } else {
+        props.handleAddHoot(formData)
+    }
+  }
 
   return (
     <main>
       <form onSubmit={handleSubmit}>
+        <h1>{hootId ? 'Edit Hoot' : 'New Hoot'}</h1>
         <label htmlFor="title-input">Title</label>
         <input
-          required
           type="text"
+          required
           name="title"
           id="title-input"
           value={formData.title}
@@ -57,8 +55,8 @@ const HootForm = (props) => {
         />
         <label htmlFor="text-input">Text</label>
         <textarea
-          required
           type="text"
+          required
           name="text"
           id="text-input"
           value={formData.text}
@@ -66,6 +64,7 @@ const HootForm = (props) => {
         />
         <label htmlFor="category-input">Category</label>
         <select
+          type="text"
           required
           name="category"
           id="category-input"
@@ -77,12 +76,12 @@ const HootForm = (props) => {
           <option value="Music">Music</option>
           <option value="Movies">Movies</option>
           <option value="Sports">Sports</option>
-          <option value="Television">Television</option>
+          <option value="Televesion">Television</option>
         </select>
         <button type="submit">SUBMIT</button>
       </form>
     </main>
-  );
-};
+  )
+}
 
-export default HootForm;
+export default HootForm

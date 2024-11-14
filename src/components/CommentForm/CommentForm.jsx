@@ -1,36 +1,33 @@
-// src/components/CommentForm/CommentForm.jsx
+import { useState } from 'react'
 
-import { useState, useEffect } from 'react';
+const CommentForm = props => {
+  const [formData, setFormData] = useState({
+    text: '',
+  })
 
-import * as hootService from '../../services/hootService';
+  const handleChange = event => {
+    setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
 
-const CommentForm = (props) => {
-  const [formData, setFormData] = useState({ text: '' });
-
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    props.handleAddComment(formData);
-    setFormData({ text: '' });
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    props.handleAddComment(formData)
+    setFormData({ text: '' })
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="text-input">Your comment:</label>
       <textarea
-        required
-        type="text"
+        value={formData.text}
         name="text"
         id="text-input"
-        value={formData.text}
+        required
         onChange={handleChange}
-      />
+      ></textarea>
       <button type="submit">SUBMIT COMMENT</button>
     </form>
-  );
-};
+  )
+}
 
-export default CommentForm;
+export default CommentForm
